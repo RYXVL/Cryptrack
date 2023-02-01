@@ -19,7 +19,8 @@ class _CryptoContainerState extends State<CryptoContainer> {
     return !isLoading ? Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10.0)),
-        color: Color(0xff06060a),
+        // color: Color(0xff06060a),
+        color: Color(0xffD2AE6D),
       ),
       height: 200.0,
       width: 125.0,
@@ -43,13 +44,16 @@ class _CryptoContainerState extends State<CryptoContainer> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Image.asset('images/${widget.cryptoAbbreviation.toLowerCase()}.png',
-              height: 50.0,
-              width: 50.0,
+              height: 100.0,
+              width: 100.0,
+            ),
+            SizedBox(
+              height: 30.0,
             ),
             Text('${widget.cryptoName}',
-              style: TextStyle(fontSize: 17.0),),
+              style: TextStyle(fontSize: 30.0,color: Colors.white,),),
             Text('${widget.cryptoAbbreviation}',
-              style: TextStyle(fontSize: 13.0),),
+              style: TextStyle(fontSize: 15.0,color: Colors.white,),),
           ],
         ),
       ),
@@ -59,7 +63,7 @@ class _CryptoContainerState extends State<CryptoContainer> {
       width: 125.0,
       child: Center(
         child: !isLoading ? null :SpinKitCubeGrid(
-          color: Colors.white,
+          color: Color(0xffD2AE6D),
           size: 50.0,
           // controller: AnimationController(vsync: this, duration: const Duration(milliseconds: 1200)),
         ),
