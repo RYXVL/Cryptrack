@@ -63,7 +63,7 @@ class _CryptoConvertorState extends State<CryptoConvertor> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.lightGreenAccent,
+        backgroundColor: Color(0xffD2AE6D),
         leading: TextButton(
           onPressed: () {
             FocusManager.instance.primaryFocus?.unfocus();
@@ -87,7 +87,7 @@ class _CryptoConvertorState extends State<CryptoConvertor> {
               Expanded(
                 // width: 150.0,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 30.0),
                   child: TextField(
                     onChanged: (newValue) {
                       question = double.parse(newValue);
@@ -100,10 +100,31 @@ class _CryptoConvertorState extends State<CryptoConvertor> {
                   ),
                 ),
               ),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 30.0),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton(
+                    items: list,
+                    onChanged: (value) {
+                      setState(() {
+                        cryptoLeft = value;
+                      });
+                    },
+                    value: cryptoLeft,
+                  ),
+                ),
+              ),
+              // TextField(decoration: InputDecoration(hintText: 'Hello', focusColor: Colors.grey),),
+              // TextField(),
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
               Expanded(
                 // width: 150.0,
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 30.0),
                   child: TextField(
                     enabled: false,
                     style: TextStyle(color: Colors.black),
@@ -120,50 +141,60 @@ class _CryptoConvertorState extends State<CryptoConvertor> {
                   ),
                 ),
               ),
-              // TextField(decoration: InputDecoration(hintText: 'Hello', focusColor: Colors.grey),),
-              // TextField(),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              DropdownButtonHideUnderline(
-                child: DropdownButton(
-                  items: list,
-                  onChanged: (value) {
-                    setState(() {
-                      cryptoLeft = value;
-                    });
-                  },
-                  value: cryptoLeft,
-                ),
-              ),
-              DropdownButtonHideUnderline(
-                child: DropdownButton(
-                  items: list,
-                  onChanged: (value) {
-                    setState(() {
-                      cryptoRight = value;
-                    });
-                  },
-                  value: cryptoRight,
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 30.0),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton(
+                    items: list,
+                    onChanged: (value) {
+                      setState(() {
+                        cryptoRight = value;
+                      });
+                    },
+                    value: cryptoRight,
+                  ),
                 ),
               ),
             ],
           ),
-          TextButton(
-            onPressed: () {
-              double x = widget.list[Crypto.list.indexOf('$cryptoLeft')];
-              double y = widget.list[Crypto.list.indexOf('$cryptoRight')];
-              setState(() {
-                answer = question * x / y;
-              });
-              // print('$x | $y');
-              // print('$question');
-            },
-            child: Text('Calculate'),
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.lightGreenAccent),
+          SizedBox(
+            height: 30.0,
+          ),
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(5.0),),
+              color: Color(0xffD2AE6D),
+            ),
+            height: 75.0,
+            width: 300.0,
+            child: TextButton(
+              onPressed: () {
+                double x = widget.list[Crypto.list.indexOf('$cryptoLeft')];
+                double y = widget.list[Crypto.list.indexOf('$cryptoRight')];
+                setState(() {
+                  answer = question * x / y;
+                });
+                // print('$x | $y');
+                // print('$question');
+              },
+              child: Text('Calculate', style: TextStyle(color: Colors.white, fontSize: 30.0,),),
+              // style: ButtonStyle(
+              //   backgroundColor: MaterialStateProperty.all(Colors.lightGreenAccent),
+              // ),
+            ),
+          ),
+          Expanded(
+            child: Hero(
+              tag: 'logo',
+              child: Container(
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage("images/phoenix.png"),
+                    // scale: 3.0,
+                    // fit: BoxFit.fill,
+                  ),
+                ),
+              ),
             ),
           ),
         ],

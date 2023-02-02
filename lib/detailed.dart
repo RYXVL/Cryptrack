@@ -3,6 +3,8 @@ import 'package:http/http.dart';
 import 'package:flutter/material.dart';
 import 'currencies.dart';
 import 'dart:convert';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 
 const apikey = '8FF9D1ED-7BDD-4788-AEF9-27A7E4669027';
 // const apikey = '052BDA3D-3C66-45B1-B9DC-14129FADDEC7';
@@ -25,23 +27,30 @@ class _DetailedState extends State<Detailed> {
   late String cryptoName;
   late String cryptoAbbreviation;
   late double cryptoValue;
+  bool isValueLoading = false;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    cryptoName =widget.cryptoName;
+    cryptoName = widget.cryptoName;
     cryptoAbbreviation = widget.cryptoAbbreviation;
     cryptoValue = widget.value;
     Currencies currencies = Currencies();
     for (int i = 0; i < currencies.currencyList.length; i++) {
-      list.add(DropdownMenuItem(child: Text('${currencies.currencyList[i]}'), value: currencies.currencyList[i],),);
+      list.add(
+        DropdownMenuItem(
+          child: Text('${currencies.currencyList[i]}'),
+          value: currencies.currencyList[i],
+        ),
+      );
     }
   }
 
   Future<double> updateDetails() async {
     // print('before');
-    Response response = await get(Uri.parse('https://rest.coinapi.io/v1/exchangerate/$cryptoAbbreviation/$curr?apikey=$apikey'));
+    Response response = await get(Uri.parse(
+        'https://rest.coinapi.io/v1/exchangerate/$cryptoAbbreviation/$curr?apikey=$apikey'));
     // print(response.body);
     var decodedData = jsonDecode(response.body);
     return decodedData['rate'];
@@ -51,6 +60,7 @@ class _DetailedState extends State<Detailed> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Color(0xffD2AE6D),
         leading: TextButton(
           onPressed: () {
             Navigator.pop(context);
@@ -66,28 +76,61 @@ class _DetailedState extends State<Detailed> {
           children: [
             Image.asset(
               'images/${cryptoAbbreviation.toLowerCase()}.png',
-              height: 100.0,
-              width: 100.0,
+              height: 300.0,
+              width: 300.0,
             ),
-            Text('Name: ${cryptoName}'),
-            Text('Code: ${cryptoAbbreviation}'),
-            Text('Value: ${cryptoValue.toStringAsFixed(5)} $curr'),
-            DropdownButtonHideUnderline(
-              child: DropdownButton(
-                items: list,
-                onChanged: (value) async {
-                  setState(() {
-                    curr = value;
-                  });
-                  double temp = await updateDetails();
-                  setState(() {
-                    print('$temp');
-                    cryptoValue = temp;
-                  });
-                },
-                value: curr,
+            // Divider(
+            //   color: Color(0xffD2AE6D),
+            // ),
+            Expanded(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                child: Container(
+                  width: double.infinity,
+
+                  decoration: BoxDecoration(
+                    color: Color(0xffD2AE6D),
+                    borderRadius: BorderRadius.only(topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0),),
+                  ),
+                  child: Column(
+                    // crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      SizedBox(
+                        height: 50.0,
+                      ),
+                      Text('Name: ${cryptoName}', style: GoogleFonts.exo(fontSize: 20.0),),
+                      Text('Code: ${cryptoAbbreviation}', style: GoogleFonts.exo(fontSize: 20.0),),
+                      !isValueLoading ? Text('Value: ${cryptoValue.toStringAsFixed(5)} $curr', style: GoogleFonts.exo(fontSize: 20.0),) :
+                      SpinKitWave(
+                        // color: Colors.white,
+                        size: 50.0,
+                        color: Colors.black,
+                        // controller: AnimationController(vsync: this, duration: const Duration(milliseconds: 1200)),
+                      ),
+                      DropdownButtonHideUnderline(
+                        child: DropdownButton(
+                          items: list,
+                          onChanged: (value) async {
+                            setState(() {
+                              curr = value;
+                              isValueLoading = true;
+                            });
+                            double temp = await updateDetails();
+                            setState(() {
+                              isValueLoading = false;
+                              print('$temp');
+                              cryptoValue = temp;
+                            });
+                          },
+                          value: curr,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               ),
             ),
+
           ],
         ),
       ),

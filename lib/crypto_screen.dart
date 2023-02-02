@@ -100,18 +100,20 @@ class _CryptoScreenState extends State<CryptoScreen> {
               // style: ButtonStyle(
               //   backgroundColor: MaterialStateProperty.all(Color(0xff7b7b85)),
               // ),
-              child: AnimatedTextKit(
-                repeatForever: true,
-                animatedTexts: [
-                  FadeAnimatedText('Crypto Convertor',
-                    textStyle: TextStyle(color: Colors.white, fontSize: 30.0),),
-                  // FadeAnimatedText('do it RIGHT!!'),
-                  // FadeAnimatedText('do it RIGHT NOW!!!'),
-                ],
-                onTap: () {
-                  print("Tap Event");
-                },
-              ),
+              child: Text('Crypto Convertor',
+                style: TextStyle(color: Colors.white, fontSize: 30.0),),
+              // child: AnimatedTextKit(
+              //   repeatForever: true,
+              //   animatedTexts: [
+              //     FadeAnimatedText('Crypto Convertor',
+              //       textStyle: TextStyle(color: Colors.white, fontSize: 30.0),),
+              //     // FadeAnimatedText('do it RIGHT!!'),
+              //     // FadeAnimatedText('do it RIGHT NOW!!!'),
+              //   ],
+              //   onTap: () {
+              //     print("Tap Event");
+              //   },
+              // ),
               // child: Text(
               //   'Crypto Convertor',
               //   style: TextStyle(color: Colors.white),
@@ -199,7 +201,7 @@ class _CryptoScreenState extends State<CryptoScreen> {
           SizedBox(
             height: 25.0,
           ),
-          Text('Setting up the conversion enviornment...'),
+          Text('Setting up the conversion enviornment...', style: TextStyle(color: Color(0xffD2AE6D),),),
         ],
       )
     ),
