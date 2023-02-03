@@ -10,7 +10,6 @@ class Loading extends StatelessWidget {
         child: SpinKitSquareCircle(
           color: Colors.white,
           size: 50.0,
-          // controller: AnimationController(vsync: this, duration: const Duration(milliseconds: 1200)),
         ),
       ),
     );

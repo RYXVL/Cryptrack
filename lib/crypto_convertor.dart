@@ -53,12 +53,6 @@ class _CryptoConvertorState extends State<CryptoConvertor> {
   String cryptoRight = 'BTC';
   double question = 0;
   double answer = 0;
-
-  // @override
-  void initState() {
-    super.initState();
-    // allValueList = widget.list;
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,15 +74,11 @@ class _CryptoConvertorState extends State<CryptoConvertor> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              // Text(
-              //   'data',
-              //   style: TextStyle(fontSize: 100.0),
-              // ),
               Expanded(
-                // width: 150.0,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 30.0),
                   child: TextField(
+                    keyboardType: TextInputType.number,
                     onChanged: (newValue) {
                       question = double.parse(newValue);
                     },
@@ -114,15 +104,12 @@ class _CryptoConvertorState extends State<CryptoConvertor> {
                   ),
                 ),
               ),
-              // TextField(decoration: InputDecoration(hintText: 'Hello', focusColor: Colors.grey),),
-              // TextField(),
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Expanded(
-                // width: 150.0,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 30.0),
                   child: TextField(
@@ -174,13 +161,8 @@ class _CryptoConvertorState extends State<CryptoConvertor> {
                 setState(() {
                   answer = question * x / y;
                 });
-                // print('$x | $y');
-                // print('$question');
               },
               child: Text('Calculate', style: TextStyle(color: Colors.white, fontSize: 30.0,),),
-              // style: ButtonStyle(
-              //   backgroundColor: MaterialStateProperty.all(Colors.lightGreenAccent),
-              // ),
             ),
           ),
           Expanded(
@@ -190,8 +172,6 @@ class _CryptoConvertorState extends State<CryptoConvertor> {
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage("images/phoenix.png"),
-                    // scale: 3.0,
-                    // fit: BoxFit.fill,
                   ),
                 ),
               ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'crypto_data_getter.dart';
 import 'detailed.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'error_condn.dart';
 
 class CryptoContainer extends StatefulWidget {
   CryptoContainer(this.cryptoName, this.cryptoAbbreviation);
@@ -12,33 +13,34 @@ class CryptoContainer extends StatefulWidget {
 }
 
 class _CryptoContainerState extends State<CryptoContainer> {
-
   bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return !isLoading ? Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.all(Radius.circular(10.0)),
-        // color: Color(0xff06060a),
         color: Color(0xffD2AE6D),
       ),
       height: 200.0,
       width: 125.0,
       margin: EdgeInsets.all(5.0),
-      // color: Colors.lightGreenAccent,
       child: TextButton(
         onPressed: () async {
           setState(() {
             isLoading = true;
           });
-          // print('$cryptoName |||||| $cryptoAbbreviation');
           Crypto crypto = Crypto(widget.cryptoAbbreviation, 'USD');
           double temp = await crypto.getData();
+          int errorFlag = 0;
+          if(temp == -1 || temp == -2) {
+            errorFlag = 1;
+            Navigator.push(context, MaterialPageRoute(builder: (context) {return ErrorCondition(temp.toInt());}));
+          }
           setState(() {
             isLoading = false;
           });
-          Navigator.push(context, MaterialPageRoute(builder: (context) {return Detailed(widget.cryptoName, widget.cryptoAbbreviation, temp);}));
-          // print('$temp');
+          if(errorFlag == 0)
+            Navigator.push(context, MaterialPageRoute(builder: (context) {return Detailed(widget.cryptoName, widget.cryptoAbbreviation, temp);}));
         },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -65,7 +67,6 @@ class _CryptoContainerState extends State<CryptoContainer> {
         child: !isLoading ? null :SpinKitCubeGrid(
           color: Color(0xffD2AE6D),
           size: 50.0,
-          // controller: AnimationController(vsync: this, duration: const Duration(milliseconds: 1200)),
         ),
       ),
     );

@@ -12,11 +12,9 @@ const apikey = '8FF9D1ED-7BDD-4788-AEF9-27A7E4669027';
 
 class Detailed extends StatefulWidget {
   Detailed(this.cryptoName, this.cryptoAbbreviation, this.value);
-
   String cryptoName;
   String cryptoAbbreviation;
   double value;
-
   @override
   State<Detailed> createState() => _DetailedState();
 }
@@ -28,10 +26,8 @@ class _DetailedState extends State<Detailed> {
   late String cryptoAbbreviation;
   late double cryptoValue;
   bool isValueLoading = false;
-
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     cryptoName = widget.cryptoName;
     cryptoAbbreviation = widget.cryptoAbbreviation;
@@ -48,10 +44,8 @@ class _DetailedState extends State<Detailed> {
   }
 
   Future<double> updateDetails() async {
-    // print('before');
     Response response = await get(Uri.parse(
         'https://rest.coinapi.io/v1/exchangerate/$cryptoAbbreviation/$curr?apikey=$apikey'));
-    // print(response.body);
     var decodedData = jsonDecode(response.body);
     return decodedData['rate'];
   }
@@ -79,21 +73,16 @@ class _DetailedState extends State<Detailed> {
               height: 300.0,
               width: 300.0,
             ),
-            // Divider(
-            //   color: Color(0xffD2AE6D),
-            // ),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
                 child: Container(
                   width: double.infinity,
-
                   decoration: BoxDecoration(
                     color: Color(0xffD2AE6D),
                     borderRadius: BorderRadius.only(topLeft: Radius.circular(30.0), topRight: Radius.circular(30.0),),
                   ),
                   child: Column(
-                    // crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       SizedBox(
                         height: 50.0,
@@ -102,10 +91,8 @@ class _DetailedState extends State<Detailed> {
                       Text('Code: ${cryptoAbbreviation}', style: GoogleFonts.exo(fontSize: 20.0),),
                       !isValueLoading ? Text('Value: ${cryptoValue.toStringAsFixed(5)} $curr', style: GoogleFonts.exo(fontSize: 20.0),) :
                       SpinKitWave(
-                        // color: Colors.white,
                         size: 50.0,
                         color: Colors.black,
-                        // controller: AnimationController(vsync: this, duration: const Duration(milliseconds: 1200)),
                       ),
                       DropdownButtonHideUnderline(
                         child: DropdownButton(
@@ -130,7 +117,6 @@ class _DetailedState extends State<Detailed> {
                 ),
               ),
             ),
-
           ],
         ),
       ),
